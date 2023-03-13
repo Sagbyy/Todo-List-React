@@ -1,13 +1,19 @@
 import { useState } from 'react';
 import Item from '../Item/Item'
+import { v4 as uuidv4 } from 'uuid';
 
 export default function Form() {
 
     const [dataArr, setDataArr] = useState([
-        {txt: "Promener le chien"},
-        {txt: "Apprendre le C"},
-        {txt: "Continuer React"}
+        {txt: "Promener le chien", id: uuidv4()},
+        {txt: "Apprendre le C", id: uuidv4()},
+        {txt: "Continuer React", id: uuidv4()}
     ])
+
+    const deleteElement = id => {
+        const filteredState = dataArr.filter(item => item.id !== id)
+        setDataArr(filteredState)
+    }
 
     const addItem = e => {
         e.preventDefault();
@@ -25,13 +31,15 @@ export default function Form() {
                 <button className='mt-2 btn btn-primary d-block' onClick={addItem}>Ajouter !</button>
             </form>
 
-            <h2>Liste des choses à faire : </h2>
+            <h2>Liste des choses à faire :dzqd </h2>
             <ul className='list-group'>
-                {dataArr.map((item, index) => {
+                {dataArr.map(item => {
                     return (
                         <Item 
-                        txt={item.txt}
-                        key={item.index}
+                        txt = {item.txt}
+                        key = {item.id}
+                        id = {item.id}
+                        delFunc = {deleteElement}
                         />
                     )
                 })}
